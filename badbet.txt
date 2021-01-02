@@ -100,32 +100,58 @@ When
                                                     Close 
                                                 )
                                             )
-                                            (Pay
-                                                (Role "outbet")
-                                                (Party (Role "player1"))
-                                                (Token "" "")
-                                                (SubValue
-                                                    (ChoiceValue
+                                            (When
+                                                [Case
+                                                    (Choice
                                                         (ChoiceId
-                                                            "stake"
-                                                            (Role "player1")
-                                                        ))
-                                                    (Constant 1)
-                                                )
-                                                (Pay
-                                                    (Role "outbet")
-                                                    (Party (Role "player2"))
-                                                    (Token "" "")
-                                                    (SubValue
-                                                        (ChoiceValue
-                                                            (ChoiceId
-                                                                "stake"
-                                                                (Role "player1")
-                                                            ))
-                                                        (Constant 1)
+                                                            "outcome"
+                                                            (Role "mediator")
+                                                        )
+                                                        [Bound 1 2]
                                                     )
-                                                    Close 
-                                                )
+                                                    (If
+                                                        (ValueEQ
+                                                            (ChoiceValue
+                                                                (ChoiceId
+                                                                    "outcome"
+                                                                    (Role "mediator")
+                                                                ))
+                                                            (ChoiceValue
+                                                                (ChoiceId
+                                                                    "outcome"
+                                                                    (Role "player1")
+                                                                ))
+                                                        )
+                                                        (Pay
+                                                            (Role "outbet")
+                                                            (Party (Role "player1"))
+                                                            (Token "" "")
+                                                            (MulValue
+                                                                (ChoiceValue
+                                                                    (ChoiceId
+                                                                        "stake"
+                                                                        (Role "player1")
+                                                                    ))
+                                                                (Constant 2)
+                                                            )
+                                                            Close 
+                                                        )
+                                                        (Pay
+                                                            (Role "outbet")
+                                                            (Party (Role "player2"))
+                                                            (Token "" "")
+                                                            (MulValue
+                                                                (ChoiceValue
+                                                                    (ChoiceId
+                                                                        "stake"
+                                                                        (Role "player2")
+                                                                    ))
+                                                                (Constant 2)
+                                                            )
+                                                            Close 
+                                                        )
+                                                    )]
+                                                30 Close 
                                             )
                                         )]
                                     100
@@ -153,7 +179,13 @@ When
                                                     ))
                                                 (Constant 1)
                                             )
-                                            Close 
+                                            (Pay
+                                                (Role "outbet")
+                                                (Party (Role "mediator"))
+                                                (Token "" "")
+                                                (Constant 2)
+                                                Close 
+                                            )
                                         )
                                     )
                                 )]
@@ -182,7 +214,13 @@ When
                                             ))
                                         (Constant 1)
                                     )
-                                    Close 
+                                    (Pay
+                                        (Role "outbet")
+                                        (Party (Role "mediator"))
+                                        (Token "" "")
+                                        (Constant 2)
+                                        Close 
+                                    )
                                 )
                             )
                         )]
